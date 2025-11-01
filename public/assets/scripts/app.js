@@ -1,32 +1,16 @@
-const dados = [
-    {
-        "id": 1,
-        "titulo": "Dados",
-        "descricao": "Ferramenta essencial para definir os rumos da aventura e o sucesso ou falha das ações.",
-        "conteudo": "Os dados de múltiplos lados (d4, d6, d8, d10, d12, d20) são usados para introduzir o elemento de sorte. Eles garantem que nem todas as ações sejam previsíveis, tornando o jogo emocionante.",
-        "categoria": "Conceito Básico",
-        "sistema": "Universal",
-        "imagem": "assets/img/dadosrpg.jpg"
-    },
-    {
-        "id": 2,
-        "titulo": "Fichas",
-        "descricao": "O registro completo de cada personagem: atributos, habilidades, equipamentos e história.",
-        "conteudo": "A ficha é a representação física do personagem no jogo. É onde o jogador anota tudo, desde a força do seu herói até o número de moedas de ouro que ele possui. É vital para a continuidade da história.",
-        "categoria": "Conceito Básico",
-        "sistema": "Universal",
-        "imagem": "assets/img/ficharpg.jpg"
-    },
-    {
-        "id": 3,
-        "titulo": "Narrador (Mestre)",
-        "descricao": "Responsável por guiar a história, descrever o mundo e interpretar personagens secundários.",
-        "conteudo": "Conhecido como Mestre (GM) ou Narrador, ele é o árbitro final das regras e o principal contador de histórias. Sem o Mestre, não há mundo para explorar nem aventuras para viver.",
-        "categoria": "Função Essencial",
-        "sistema": "Universal",
-        "imagem": "assets/img/mestre.jpg"
+const API_URL = "http://localhost:3000/conceitos";
+let dados = [];
+
+async function carregarDados() {
+    try {
+        const resposta = await fetch(API_URL);
+        dados = await resposta.json();
+        renderizarCards();
+        renderizarDetalhes();
+    } catch (erro) {
+        console.error("Erro ao carregar dados:", erro);
     }
-];
+}
 
 function renderizarCards() {
     const containerCards = document.getElementById('cards-container');
@@ -56,7 +40,6 @@ function renderizarCards() {
 function renderizarDetalhes() {
     const urlParams = new URLSearchParams(window.location.search);
     const idItem = parseInt(urlParams.get('id'));
-
     const detalhesContainer = document.getElementById('detalhes-item');
 
     if (detalhesContainer && idItem) {
@@ -84,12 +67,51 @@ function renderizarDetalhes() {
                 </div>
             `;
             document.title = `${item.titulo} - Role & Play`;
-
         } else {
             detalhesContainer.innerHTML = `<div class="alert alert-danger text-center" role="alert">Item não encontrado.</div>`;
         }
     }
 }
 
-renderizarCards();
-renderizarDetalhes();
+async function adicionarConceito(novo) {
+    try {
+        const resposta = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(novo)
+        });
+        const data = await resposta.json();
+        console.log("Conceito adicionado:", data);
+        carregarDados();
+    } catch (erro) {
+        console.error("Erro ao adicionar:", erro);
+    }
+}
+
+async function editarConceito(id, atualizado) {
+    try {
+        const resposta = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(atualizado)
+        });
+        const data = await resposta.json();
+        console.log("Conceito atualizado:", data);
+        carregarDados();
+    } catch (erro) {
+        console.error("Erro ao atualizar:", erro);
+    }
+}
+
+async function deletarConceito(id) {
+    try {
+        await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+        console.log(`Conceito ${id} deletado.`);
+        carregarDados();
+    } catch (erro) {
+        console.error("Erro ao deletar:", erro);
+    }
+}
+
+
+carregarDados();
