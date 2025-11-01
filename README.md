@@ -6,24 +6,30 @@ Para esse projeto, além de mudarmos o JSON para o JSON Server, vamos permitir o
 
 ## Informações do trabalho
 
-- Nome:
-- Matricula:
-- Proposta de projeto escolhida:
-- Breve descrição sobre seu projeto:
+- Nome: Anny Victorya Azevedo Oliveira
+- Matricula: 899228
+- Proposta de projeto escolhida: Proposta 5
+- Breve descrição sobre seu projeto: Projeto dedicado ao universo dos RPGs, trazendo dicas para mestres e jogadores, sistemas criativos, análises de jogos e inspirações para campanhas.
 
 **Print dos testes da API com Postman ou similar**
 
 << COLOQUE A IMAGEM GET AQUI >>
+![alt text](image.png)
 
 << COLOQUE A IMAGEM POST AQUI >>
+![alt text](image-1.png)
 
 << COLOQUE A IMAGEM PUT AQUI >>
+![alt text](image-2.png)
 
 << COLOQUE A IMAGEM DELETE AQUI >>
+![alt text](image-3.png)
 
 **Print da aba NETWORK com requisições Fetch/XHR POST e GET**
 
 <<  COLOQUE A IMAGEM AQUI >>
+![POST](image-4.png)
+![GET](image-5.png)
 
 ## **Orientações Gerais**
 
